@@ -121,48 +121,62 @@ and returns the score at each pont in the game, like so:
 
 Final Score: awayTeam - homeTeam */
 
-function getInningScore (cb){
-  let score = {
-    home: 0,
-    away: 0
-  }
-  score.home = score.home + cb();
-  score.away = score.away + cb();
-  return score
+function getInningScore (cb,innings) {
+let scores = [ {home: 0,away: 0},
+               {home: 0,away: 0},
+               {home: 0,away: 0},
+               {home: 0,away: 0},
+               {home: 0,away: 0},
+               {home: 0,away: 0},
+               {home: 0,away: 0},
+               {home: 0,away: 0},
+               {home: 0,away: 0},
+]
+
+ 
+for(i = 0; i < innings; i++){
+  scores[i].home = scores[i].home + cb();
+  scores[i].away = scores[i].away + cb();  
+}
+scores[1].home = scores[0].home + scores[1].home
+scores[2].home = scores[1].home + scores[2].home
+scores[3].home = scores[2].home + scores[3].home
+scores[4].home = scores[3].home + scores[4].home
+scores[5].home = scores[4].home + scores[5].home
+scores[6].home = scores[5].home + scores[6].home
+scores[7].home = scores[6].home + scores[7].home
+scores[8].home = scores[7].home + scores[8].home
+
+scores[1].away = scores[0].away + scores[1].away
+scores[2].away = scores[1].away + scores[2].away
+scores[3].away = scores[2].away + scores[3].away
+scores[4].away = scores[3].away + scores[4].away
+scores[5].away = scores[4].away + scores[5].away
+scores[6].away = scores[5].away + scores[6].away
+scores[7].away = scores[6].away + scores[7].away
+scores[8].away = scores[7].away + scores[8].away
+
+return`    1st inning: ${scores[0].home} - ${scores[0].away}
+    2nd inning: ${scores[1].home} - ${scores[1].away}
+    3rd inning: ${scores[2].home} - ${scores[2].away}
+    4th inning: ${scores[3].home} - ${scores[3].away}
+    5th inning: ${scores[4].home} - ${scores[4].away}
+    6th inning: ${scores[5].home} - ${scores[5].away}
+    7th inning: ${scores[6].home} - ${scores[6].away}
+    8th inning: ${scores[7].home} - ${scores[7].away}
+    9th inning: ${scores[8].home} - ${scores[8].away}
+    
+    Final Score: ${scores[8].home} - ${scores[8].away}`
+
+
 }
 
-console.log(getInningScore(inning))
+
 
 
 function scoreboard(cb2,cb1,innings) {
-  let score = {
-    home: 0,
-    away: 0
-  }
+ return cb2(cb1,9)
+    }
 
+console.log(scoreboard(getInningScore,inning,9))
 
-  for(i = 0; i < innings; i++){
-    score.home =   score.home + cb2(cb1);
-    score.away = score.away + cb2(cb1);
-    
-  }
-  
-return`1st inning: ${score.home} - ${score.away}
-2nd inning: ${score.home} - ${score.away}
-3rd inning: ${score.home} - ${score.away}
-4th inning: ${score.home} - ${score.away}
-5th inning: ${score.home} - ${score.away}
-6th inning: ${score.home} - ${score.away}
-7th inning: ${score.home} - ${score.away}
-8th inning: ${score.home} - ${score.away}
-9th inning: ${score.home} - ${score.away}
-
-Final Score: ${score.home} - ${score.away}`
-
-   
-}
-
-
-
-
-console.log(scoreboard(getInningScore,inning, 9))
