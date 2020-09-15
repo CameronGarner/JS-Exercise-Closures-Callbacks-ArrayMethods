@@ -28,9 +28,15 @@ function processFirstItem(stringList, callback) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ * One uses a closure and the other doesnt.
+ * 
  * 2. Which of the two uses a closure? How can you tell?
  * 
- * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ * The first one uses a closure.I can tell because there is a function nested within another function.
+ * 
+ * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better?
+ * 
+ * The counter1 code would be preferable if we wanted the return to remember the previous return value.The code for counter2 would be preferable to always return the same value.  
  *
 */
 
@@ -56,11 +62,13 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
+function inning(){
 
-    /*Code Here*/
+  return Math.floor(Math.random() * Math.floor(3));
 
 }
+
+console.log(inning())
 
 /* Task 3: finalScore()
 
@@ -76,11 +84,20 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
-
-  /*Code Here*/
-
+function finalScore(cb,innings){
+  let final = {
+    Home: 0,
+    Away: 0
+  }
+for(i = 0; i < innings; i++){
+    final.Home = final.Home + cb();
+    final.Away = final.Away + cb();
+  
 }
+return final
+}
+
+console.log(finalScore(inning,9))
 
 /* Task 4: 
 
@@ -104,8 +121,48 @@ and returns the score at each pont in the game, like so:
 
 Final Score: awayTeam - homeTeam */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function getInningScore (cb){
+  let score = {
+    home: 0,
+    away: 0
+  }
+  score.home = score.home + cb();
+  score.away = score.away + cb();
+  return score
+}
+
+console.log(getInningScore(inning))
+
+
+function scoreboard(cb2,cb1,innings) {
+  let score = {
+    home: 0,
+    away: 0
+  }
+
+
+  for(i = 0; i < innings; i++){
+    score.home =   score.home + cb2(cb1);
+    score.away = score.away + cb2(cb1);
+    
+  }
+  
+return`1st inning: ${score.home} - ${score.away}
+2nd inning: ${score.home} - ${score.away}
+3rd inning: ${score.home} - ${score.away}
+4th inning: ${score.home} - ${score.away}
+5th inning: ${score.home} - ${score.away}
+6th inning: ${score.home} - ${score.away}
+7th inning: ${score.home} - ${score.away}
+8th inning: ${score.home} - ${score.away}
+9th inning: ${score.home} - ${score.away}
+
+Final Score: ${score.home} - ${score.away}`
+
+   
 }
 
 
+
+
+console.log(scoreboard(getInningScore,inning, 9))
